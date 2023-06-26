@@ -1271,22 +1271,19 @@ echo "Execulte como root"
 			# Adquirindo easy-rsa
 			echo ""
 			fun_dep() {
-				wget -O ~/EasyRSA-v3.0.9.tgz "https://raw.githubusercontent.com/Niltonjuniornzx/EndlessProject/main/I/EasyRSA-v3.0.9.tgz"
-				[[ ! -e $HOME/EasyRSA-v3.0.9.tgz ]] && {
-					wget -O ~/EasyRSA-v3.0.9.tgz "https://raw.githubusercontent.com/Niltonjuniornzx/EndlessProject/main/I/EasyRSA-v3.0.9.tgz"
-				}
-				tar xzf ~/EasyRSA-v3.0.9.tgz -C ~/
-				mv ~/EasyRSA-v3.0.9/ /etc/openvpn/
-				mv /etc/openvpn/EasyRSA-v3.0.9/ /etc/openvpn/easy-rsa/
+				wget -O ~/EasyRSA-3.1.5.tgz "https://github.com/Niltonjuniornzx/EndlessProject/raw/main/I/EasyRSA-3.1.5.tgz"
+				tar xzf ~/EasyRSA-3.1.5.tgz -C ~/
+				mv ~/EasyRSA-3.1.5/ /etc/openvpn/
+				mv /etc/openvpn/EasyRSA-3.1.5/ /etc/openvpn/easy-rsa/
 				chown -R root:root /etc/openvpn/easy-rsa/
-				rm -rf ~/EasyRSA-v3.0.9.tgz
+				rm -rf ~/EasyRSA-3.1.5.tgz
 				cd /etc/openvpn/easy-rsa/
-				./easyrsa init-pki
-				./easyrsa --batch build-ca nopass
-				./easyrsa gen-dh
-				./easyrsa build-server-full server nopass
-				./easyrsa build-client-full SSHPLUS nopass
-				./easyrsa gen-crl
+				echo yes | ./easyrsa init-pki 
+				echo yes | ./easyrsa --batch build-ca nopass
+				echo yes | ./easyrsa gen-dh
+				echo yes | ./easyrsa build-server-full server nopass
+				echo yes | ./easyrsa build-client-full SSHPLUS nopass
+				echo yes | ./easyrsa gen-crl
 				cp pki/ca.crt pki/private/ca.key pki/dh.pem pki/issued/server.crt pki/private/server.key /etc/openvpn/easy-rsa/pki/crl.pem /etc/openvpn
 				chown nobody:$GROUPNAME /etc/openvpn/crl.pem
 				openvpn --genkey --secret /etc/openvpn/ta.key
