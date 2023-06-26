@@ -1466,13 +1466,20 @@ exit 0' >$RCLOCAL
 		} || {
 			sks='\033[1;31mOFF'
 		}
+		[[ $(netstat -nplt | grep -wc 'WebSocket') != '0' ]] && {
+			sks='\033[1;32mON'
+			echo -e "\033[0;34m╼ \033[1;32mPORTAS\033[1;37m: \033[1;37m80"
+		} || {
+			sks='\033[1;31mOFF'
+		}
 		[[ $(screen -list | grep -wc 'proxy') != '0' ]] && var_sks1="\033[1;32m✓" || var_sks1="\033[1;31m✕"
 		[[ $(screen -list | grep -wc 'ws') != '0' ]] && var_sks2="\033[1;32m✓" || var_sks2="\033[1;31m✕"
+		[[ $(screen -list | grep -wc 'novoWS') != '0' ]] && var_sks3="\033[1;32m✓" || var_sks3="\033[1;31m✕"
 		[[ $(screen -list | grep -wc 'openpy') != '0' ]] && sksop="\033[1;32m✓" || sksop="\033[1;31m✕"
 		echo -e "\033[0;34m┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\033[0m"
 		echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m01\E[38;5;196m|\033[1;37m➜ \E[38;5;15mSOCKS SSH $var_sks1 \033[0m                       \033[0;34m┃"
 		echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m02\E[38;5;196m|\033[1;37m➜ \E[38;5;15mWEBSOCKET $var_sks2 \033[0m                       \033[0;34m┃"
-		echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m03\E[38;5;196m|\033[1;37m➜ \E[38;5;15mWEBSOCKET SECURITY \033[0m                \033[0;34m┃"
+		echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m03\E[38;5;196m|\033[1;37m➜ \E[38;5;15mWEBSOCKET SECURITY $var_sks3 \033[0m              \033[0;34m┃"
 		echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m04\E[38;5;196m|\033[1;37m➜ \E[38;5;15mSOCKS OPENVPN $sksop \033[0m                   \033[0;34m┃"
 		echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m05\E[38;5;196m|\033[1;37m➜ \E[38;5;15mABRIR PORTA\033[0m                        \033[0;34m┃"
 		echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m06\E[38;5;196m|\033[1;37m➜ \E[38;5;15mALTERAR STATUS SOCKS SSH\033[0m           \033[0;34m┃"
@@ -2068,6 +2075,7 @@ echo -e "\033[0;34m┏━━━━━━━━━━━━━━━━━━━�
 			} || {
 				sts9="\033[1;31m✕ "
 			}
+			
 			[[ "$(netstat -tlpn | grep 'sslh' | wc -l)" != '0' ]] && {
 				echo -e "\033[1;32mSSLH\033[1;31m: \033[1;37m$(netstat -nplt | grep 'sslh' | awk {'print $4'} | cut -d: -f2 | xargs)"
 				sts7="\033[1;32m✓ "
@@ -2081,9 +2089,14 @@ echo -e "\033[0;34m┏━━━━━━━━━━━━━━━━━━━�
 			} || {
 				sts5="\033[1;31m✕ "
 			}
-
 			[[ "$(netstat -tlpn | grep 'python' | wc -l)" != '0' ]] && {
 				echo -e "\033[1;32mPROXY SOCKS\033[1;31m: \033[1;37m$(netstat -nplt | grep 'python' | awk {'print $4'} | cut -d: -f2 | xargs)"
+				sts4="\033[1;32m✓ "
+			} || {
+				sts4="\033[1;31m✕ "
+			}
+			 [[ "$(netstat -tlpn | grep 'WebSocket' | wc -l)" != '0' ]] && {
+				echo -e "\033[1;32mWEBSOCKET SECURITY\033[1;31m: \033[1;37m80"
 				sts4="\033[1;32m✓ "
 			} || {
 				sts4="\033[1;31m✕ "

@@ -457,7 +457,7 @@ else
             [[ "$oprc" = @(s|S) ]] && {
                 fun_edithost
             } || {
-                fun_geraovpn
+             echo s | fun_geraovpn
             }
             gerarovpn() {
                 [[ ! -e "/root/$username.zip" ]] && {
